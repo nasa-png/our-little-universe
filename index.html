@@ -263,6 +263,53 @@ section {
   transform: scale(1.045);
 }
 
+/* The Little Things */
+
+#little-things {
+  background:
+    radial-gradient(ellipse at 50% 50%, rgba(111,75,91,.07), transparent 65%);
+}
+
+.little-intro {
+  max-width: 560px;
+  margin-bottom: 45px;
+}
+
+.little-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 18px;
+}
+
+.little-card {
+  background: var(--surface);
+  border: 1px solid rgba(201,166,173,.13);
+  padding: 30px 25px;
+  transition: .3s ease;
+}
+
+.little-card:hover {
+  border-color: var(--accent);
+  transform: translateY(-4px);
+}
+
+.little-card span {
+  color: var(--accent);
+  font-size: 11px;
+  letter-spacing: 3px;
+}
+
+.little-card h3 {
+  color: var(--text);
+  margin: 18px 0 12px;
+  font-size: 27px;
+}
+
+.little-card p {
+  font-size: 14px;
+  line-height: 1.9;
+}
+
 /* Letter */
 
 .letter-section {
@@ -303,37 +350,6 @@ section {
   font-size: clamp(25px, 5vw, 36px);
   margin-top: 45px;
   line-height: 1.8;
-}
-
-/* Song */
-
-.song-section {
-  text-align: center;
-}
-
-.song-card {
-  max-width: 570px;
-  margin: 45px auto 0;
-  padding: 35px 25px;
-  border: 1px solid var(--line);
-  background: var(--surface);
-}
-
-.song-symbol {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 55px;
-  color: var(--accent);
-  margin-bottom: 15px;
-}
-
-.song-card p {
-  margin-bottom: 25px;
-}
-
-audio {
-  width: 100%;
-  height: 42px;
-  accent-color: var(--accent);
 }
 
 /* Ending */
@@ -395,204 +411,8 @@ footer {
   }
 }
 
-/* Mobile */
+/* Music Intro */
 
-@media (max-width: 600px) {
-  section {
-    padding: 90px 0;
-  }
-
-  .hero h1 {
-    letter-spacing: -1px;
-  }
-
-  .counter {
-    gap: 7px;
-  }
-
-  .counter-item {
-    padding: 17px 3px;
-  }
-
-  .counter-item span {
-    font-size: 8px;
-    letter-spacing: 1px;
-  }
-
-  .memory-grid {
-    gap: 10px;
-  }
-
-  .letter {
-    padding: 30px 22px;
-  }
-
-  .ending {
-    padding: 110px 20px;
-  }
-}
-</style>
-</head>
-
-<body>
-
-<!-- OPENING -->
-
-<header class="hero">
-  <div class="hero-content">
-    <div class="dedication">To My Future Wife, My Maryomtyy ♡</div>
-
-    <h1>Our Little<br>Universe</h1>
-
-    <p class="hero-description">
-      Somewhere between all the stars and all the things left unsaid,
-      I found my favorite place in the universe.
-      <span>And somehow, it was you.</span>
-    </p>
-
-    <a href="#beginning" class="explore">Explore Our Story</a>
-  </div>
-</header>
-
-
-<!-- CHAPTER 01 -->
-
-<section class="beginning" id="beginning">
-  <div class="container section-content center reveal">
-
-    <div class="chapter-number">CHAPTER 01</div>
-
-    <h2>Every Story Has<br>a Beginning</h2>
-
-    <div class="date">November 15, 2025.</div>
-
-    <p class="beginning-copy">
-      But our story began long before that. Nine years ago,
-      long before we knew what the future had in store for us.
-      This was simply the day our story became something more.
-    </p>
-
-    <div class="counter" id="counter">
-      <div class="counter-item">
-        <strong id="days">0</strong>
-        <span>Days</span>
-      </div>
-      <div class="counter-item">
-        <strong id="hours">00</strong>
-        <span>Hours</span>
-      </div>
-      <div class="counter-item">
-        <strong id="minutes">00</strong>
-        <span>Minutes</span>
-      </div>
-      <div class="counter-item">
-        <strong id="seconds">00</strong>
-        <span>Seconds</span>
-      </div>
-    </div>
-
-  </div>
-</section>
-
-
-
-<!-- CHAPTER 02 -->
-
-<section id="memories">
-  <div class="container reveal">
-
-    <div class="chapter-number">CHAPTER 02</div>
-    <h2>Our Memories</h2>
-
-    <p class="memories-intro">
-      Little moments, familiar smiles, and memories I'll always
-      carry with me. Some days may fade, but these moments will
-      always have a place here.
-    </p>
-
-    <div class="memory-grid">
-
-      <div class="memory">
-        <img src="images/IMG-20261006-WA0069.jpg" alt="Our memory 1">
-      </div>
-
-      <div class="memory">
-        <img src="images/IMG-20261103-WA0044.jpg" alt="Our memory 2">
-      </div>
-
-      <div class="memory">
-        <img src="images/IMG-20261103-WA0045.jpg" alt="Our memory 3">
-      </div>
-
-      <div class="memory">
-        <img src="images/IMG-20261109-WA0043.jpg" alt="Our memory 4">
-      </div>
-
-    </div>
-  </div>
-</section>
-
-
-<!-- CHAPTER 03 -->
-
-<section class="letter-section" id="letter">
-  <div class="container reveal">
-
-    <div class="chapter-number">CHAPTER 03</div>
-    <h2 style="text-align:center;">A Letter to You</h2>
-
-    <div class="letter">
-
-      <p>
-        I wish you could see yourself through my eyes, just for
-        a moment, so you could understand how much I love you.
-      </p>
-
-      <p>
-        This past year has been the happiest year of my life.
-        Every little moment, every conversation, every laugh,
-        and every memory we've made has become something
-        I'll always treasure.
-      </p>
-
-      <p>
-        I don't just love having you in my life. I love you,
-        every little thing about you, and the feeling of knowing
-        that I get to share this journey with you.
-      </p>
-
-      <p>
-        If I could relive one year of my life, I'd choose this
-        one, every single time. And if I had to choose again,
-        I'd still choose you.
-      </p>
-
-      <div class="arabic-ending">
-        أنا بجد بجد بحبك يا مريومتييي
-      </div>
-
-    </div>
-  </div>
-</section>
-
-
-
-<!-- MUSIC INTRO -->
-
-<div id="music-intro">
-  <div class="intro-content">
-    <div class="intro-symbol">♫</div>
-    <h2>A little song for you</h2>
-    <p>Some songs feel like home.</p>
-    <button id="enter-site">Open your little world ♡</button>
-  </div>
-</div>
-
-<audio id="background-song" loop preload="auto">
-  <source src="Stephen%20Sanchez%20-%20Until%20I%20Found%20You%20(Official%20Video)(MP3_320K).mp3" type="audio/mpeg">
-</audio>
-
-<style>
 #music-intro {
   position: fixed;
   inset: 0;
@@ -637,7 +457,262 @@ footer {
   opacity: 0;
   pointer-events: none;
 }
+
+/* Mobile */
+
+@media (max-width: 600px) {
+  section {
+    padding: 90px 0;
+  }
+
+  .hero h1 {
+    letter-spacing: -1px;
+  }
+
+  .counter {
+    gap: 7px;
+  }
+
+  .counter-item {
+    padding: 17px 3px;
+  }
+
+  .counter-item span {
+    font-size: 8px;
+    letter-spacing: 1px;
+  }
+
+  .memory-grid {
+    gap: 10px;
+  }
+
+  .little-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .little-card {
+    padding: 25px 22px;
+  }
+
+  .letter {
+    padding: 30px 22px;
+  }
+
+  .ending {
+    padding: 110px 20px;
+  }
+}
 </style>
+</head>
+
+<body>
+
+<!-- OPENING -->
+
+<header class="hero">
+  <div class="hero-content">
+    <div class="dedication">To My Future Wife, My Maryomtyy ♡</div>
+
+    <h1>Our Little<br>Universe</h1>
+
+    <p class="hero-description">
+      Somewhere between all the stars and all the things left unsaid,
+      I found my favorite place in the universe.
+      <span>And somehow, it was you.</span>
+    </p>
+
+    <a href="#beginning" class="explore">Explore Our Story</a>
+  </div>
+</header>
+
+<!-- CHAPTER 01 -->
+
+<section class="beginning" id="beginning">
+  <div class="container section-content center reveal">
+
+    <div class="chapter-number">CHAPTER 01</div>
+
+    <h2>Every Story Has<br>a Beginning</h2>
+
+    <div class="date">November 15, 2025.</div>
+
+    <p class="beginning-copy">
+      But our story began long before that. Nine years ago,
+      long before we knew what the future had in store for us.
+      This was simply the day our story became something more.
+    </p>
+
+    <div class="counter" id="counter">
+      <div class="counter-item">
+        <strong id="days">0</strong>
+        <span>Days</span>
+      </div>
+      <div class="counter-item">
+        <strong id="hours">00</strong>
+        <span>Hours</span>
+      </div>
+      <div class="counter-item">
+        <strong id="minutes">00</strong>
+        <span>Minutes</span>
+      </div>
+      <div class="counter-item">
+        <strong id="seconds">00</strong>
+        <span>Seconds</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- CHAPTER 02 -->
+
+<section id="memories">
+  <div class="container reveal">
+
+    <div class="chapter-number">CHAPTER 02</div>
+    <h2>Our Memories</h2>
+
+    <p class="memories-intro">
+      Little moments, familiar smiles, and memories I'll always
+      carry with me. Some days may fade, but these moments will
+      always have a place here.
+    </p>
+
+    <div class="memory-grid">
+
+      <div class="memory">
+        <img src="images/IMG-20261006-WA0069.jpg" alt="Our memory 1">
+      </div>
+
+      <div class="memory">
+        <img src="images/IMG-20261103-WA0044.jpg" alt="Our memory 2">
+      </div>
+
+      <div class="memory">
+        <img src="images/IMG-20261103-WA0045.jpg" alt="Our memory 3">
+      </div>
+
+      <div class="memory">
+        <img src="images/IMG-20261109-WA0043.jpg" alt="Our memory 4">
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- CHAPTER 03: THE LITTLE THINGS -->
+
+<section id="little-things">
+  <div class="container reveal">
+
+    <div class="chapter-number">CHAPTER 03</div>
+    <h2>The Little Things</h2>
+
+    <p class="little-intro">
+      It's not always the big moments.
+      Sometimes, it's the smallest things that make
+      someone mean the world to you.
+    </p>
+
+    <div class="little-grid">
+
+      <div class="little-card">
+        <span>01</span>
+        <h3>Your Smile</h3>
+        <p>
+          The way your smile makes an ordinary day
+          feel a little more beautiful.
+        </p>
+      </div>
+
+      <div class="little-card">
+        <span>02</span>
+        <h3>Your Laugh</h3>
+        <p>
+          One of my favorite sounds, especially
+          when I know I'm the reason behind it.
+        </p>
+      </div>
+
+      <div class="little-card">
+        <span>03</span>
+        <h3>The Way You Talk</h3>
+        <p>
+          I could listen to your little stories
+          for hours and never get bored.
+        </p>
+      </div>
+
+      <div class="little-card">
+        <span>04</span>
+        <h3>Just Being You</h3>
+        <p>
+          No special reason, no perfect moment.
+          I simply love the person you are.
+        </p>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<!-- CHAPTER 04 -->
+
+<section class="letter-section" id="letter">
+  <div class="container reveal">
+
+    <div class="chapter-number">CHAPTER 04</div>
+    <h2 style="text-align:center;">A Letter to You</h2>
+
+    <div class="letter">
+
+      <p>
+        I wish you could see yourself through my eyes, just for
+        a moment, so you could understand how much I love you.
+      </p>
+
+      <p>
+        This past year has been the happiest year of my life.
+        Every little moment, every conversation, every laugh,
+        and every memory we've made has become something
+        I'll always treasure.
+      </p>
+
+      <p>
+        I don't just love having you in my life. I love you,
+        every little thing about you, and the feeling of knowing
+        that I get to share this journey with you.
+      </p>
+
+      <p>
+        If I could relive one year of my life, I'd choose this
+        one, every single time. And if I had to choose again,
+        I'd still choose you.
+      </p>
+
+      <div class="arabic-ending">
+        أنا بجد بجد بحبك يا مريومتييي
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- MUSIC INTRO -->
+
+<div id="music-intro">
+  <div class="intro-content">
+    <div class="intro-symbol">♫</div>
+    <h2>A little song for you</h2>
+    <p>Some songs feel like home.</p>
+    <button id="enter-site">Open your little world ♡</button>
+  </div>
+</div>
+
+<audio id="background-song" loop preload="auto">
+  <source src="Stephen%20Sanchez%20-%20Until%20I%20Found%20You%20(Official%20Video)(MP3_320K).mp3" type="audio/mpeg">
+</audio>
 
 <script>
 const intro = document.getElementById("music-intro");
@@ -655,8 +730,6 @@ enterButton.addEventListener("click", async () => {
   }
 });
 </script>
-
-
 
 <!-- FINAL CHAPTER -->
 
@@ -678,11 +751,9 @@ enterButton.addEventListener("click", async () => {
 
 </section>
 
-
 <footer>
   Created with love by Anas.
 </footer>
-
 
 <script>
 // Relationship counter: November 15, 2025
@@ -711,7 +782,6 @@ function updateCounter() {
 
 updateCounter();
 setInterval(updateCounter, 1000);
-
 
 // Reveal sections while scrolling
 
