@@ -577,6 +577,7 @@ footer {
 
 
 
+
 <!-- CHAPTER 04 -->
 
 <section class="song-section" id="song">
@@ -594,14 +595,28 @@ footer {
         no matter how much time passes.
       </p>
 
-      <audio controls preload="metadata">
+      <button id="playOurSong">
+        A little song for you ♡
+      </button>
+
+      <audio id="ourSong" preload="metadata">
         <source src="Stephen%20Sanchez%20-%20Until%20I%20Found%20You%20(Official%20Video)(MP3_320K).mp3" type="audio/mpeg">
-        Your browser does not support the audio player.
       </audio>
     </div>
 
   </div>
 </section>
+
+<script>
+  const song = document.getElementById("ourSong");
+  const playButton = document.getElementById("playOurSong");
+
+  playButton.addEventListener("click", function () {
+    song.play();
+    playButton.textContent = "Playing for you ♡";
+  });
+</script>
+
 
 
 <!-- FINAL CHAPTER -->
