@@ -577,44 +577,83 @@ footer {
 
 
 
+<!-- MUSIC INTRO -->
 
-<!-- CHAPTER 04 -->
-
-<section class="song-section" id="song">
-  <div class="container reveal">
-
-    <div class="chapter-number">CHAPTER 04</div>
-    <h2>Our Song</h2>
-
-    <div class="song-card">
-      <div class="song-symbol">♫</div>
-
-      <p>
-        If our story had a soundtrack, this would be it.
-        A melody that will always take me back to you,
-        no matter how much time passes.
-      </p>
-
-      <button id="playOurSong">
-        A little song for you ♡
-      </button>
-
-      <audio id="ourSong" preload="metadata">
-        <source src="Stephen%20Sanchez%20-%20Until%20I%20Found%20You%20(Official%20Video)(MP3_320K).mp3" type="audio/mpeg">
-      </audio>
-    </div>
-
+<div id="music-intro">
+  <div class="intro-content">
+    <div class="intro-symbol">♫</div>
+    <h2>A little song for you</h2>
+    <p>Some songs feel like home.</p>
+    <button id="enter-site">Open your little world ♡</button>
   </div>
-</section>
+</div>
+
+<audio id="background-song" loop preload="auto">
+  <source src="Stephen%20Sanchez%20-%20Until%20I%20Found%20You%20(Official%20Video)(MP3_320K).mp3" type="audio/mpeg">
+</audio>
+
+<style>
+#music-intro {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  background: #09090d;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  transition: opacity 1s ease;
+}
+
+.intro-content {
+  padding: 25px;
+}
+
+.intro-symbol {
+  font-size: 55px;
+  color: #c9a6ad;
+  margin-bottom: 20px;
+}
+
+.intro-content h2 {
+  color: #eee9e5;
+  margin-bottom: 15px;
+}
+
+.intro-content p {
+  margin-bottom: 30px;
+}
+
+#enter-site {
+  background: transparent;
+  border: 1px solid #c9a6ad;
+  color: #c9a6ad;
+  padding: 14px 25px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+#music-intro.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+</style>
 
 <script>
-  const song = document.getElementById("ourSong");
-  const playButton = document.getElementById("playOurSong");
+const intro = document.getElementById("music-intro");
+const song = document.getElementById("background-song");
+const enterButton = document.getElementById("enter-site");
 
-  playButton.addEventListener("click", function () {
-    song.play();
-    playButton.textContent = "Playing for you ♡";
-  });
+enterButton.addEventListener("click", async () => {
+  try {
+    await song.play();
+    intro.classList.add("hidden");
+
+    setTimeout(() => intro.remove(), 1000);
+  } catch (error) {
+    console.log("Music playback failed:", error);
+  }
+});
 </script>
 
 
