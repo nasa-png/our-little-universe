@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -576,7 +575,7 @@ footer {
 #password-screen {
   position: fixed;
   inset: 0;
-  z-index: 100000;
+  z-index: 100002;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -664,6 +663,78 @@ footer {
   font-size: 12px;
 }
 
+/* Question Gate */
+
+#question-gate {
+  position: fixed;
+  inset: 0;
+  z-index: 100001;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  text-align: center;
+  background:
+    radial-gradient(ellipse at 50% 42%, rgba(111,75,91,.2), transparent 58%),
+    #09090d;
+}
+
+.question-box {
+  width: min(440px, 100%);
+  padding: 45px 25px;
+  border: 1px solid rgba(201,166,173,.22);
+  background: rgba(255,255,255,.018);
+}
+
+.question-number {
+  color: var(--accent);
+  font-size: 10px;
+  letter-spacing: 4px;
+  margin-bottom: 25px;
+}
+
+.question-box h2 {
+  color: var(--text);
+  font-size: clamp(34px, 8vw, 48px);
+  margin-bottom: 18px;
+}
+
+.question-box p {
+  margin-bottom: 30px;
+}
+
+.question-buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.question-buttons button {
+  padding: 15px 10px;
+  border: 1px solid var(--accent);
+  background: transparent;
+  color: var(--accent);
+  cursor: pointer;
+  font: 12px 'DM Sans', sans-serif;
+  transition: .3s;
+}
+
+.question-buttons button:hover {
+  background: var(--accent);
+  color: var(--bg);
+}
+
+#question-message {
+  min-height: 25px;
+  margin-top: 22px;
+  color: var(--accent);
+  font-size: 13px;
+}
+
+#question-gate.completed {
+  animation: appear .8s ease both;
+}
+
 /* Mobile */
 
 @media (max-width: 600px) {
@@ -724,12 +795,12 @@ footer {
     <form id="password-form">
       <input
         id="site-password"
-        type="password"
-        placeholder="D / M / YYYY"
+        type="text"
+        placeholder="DD/MM/YYYY"
         aria-label="Website password"
         autocomplete="off"
         inputmode="numeric"
-        maxlength="8"
+        maxlength="10"
         required
       >
 
@@ -737,6 +808,27 @@ footer {
     </form>
 
     <p id="password-error" role="alert" aria-live="polite"></p>
+  </div>
+</div>
+
+<!-- QUESTION GATE -->
+
+<div id="question-gate">
+  <div class="question-box">
+    <div class="question-number" id="question-number">QUESTION 01 / 05</div>
+
+    <h2 id="question-title">Do you love me?</h2>
+
+    <p id="question-description">
+      I hope you know the right answer ♡
+    </p>
+
+    <div class="question-buttons">
+      <button type="button" id="yes-button">Yes, of course ♡</button>
+      <button type="button" id="no-button">No</button>
+    </div>
+
+    <p id="question-message" aria-live="polite"></p>
   </div>
 </div>
 
@@ -833,7 +925,7 @@ footer {
   </div>
 </section>
 
-<!-- CHAPTER 03: THE LITTLE THINGS -->
+<!-- CHAPTER 03 -->
 
 <section id="little-things">
   <div class="container reveal">
@@ -1002,6 +1094,7 @@ footer {
 </footer>
 
 <script>
+
 // Password formatting and checking
 
 const passwordScreen = document.getElementById("password-screen");
@@ -1010,18 +1103,19 @@ const passwordInput = document.getElementById("site-password");
 const passwordError = document.getElementById("password-error");
 
 passwordInput.addEventListener("input", () => {
-  // Keep numbers only
-  const digits = passwordInput.value.replace(/\D/g, "").slice(0, 6);
+  const digits = passwordInput.value.replace(/\D/g, "").slice(0, 8);
 
   let formatted = digits;
 
-  // Format the date as D/M/YYYY
-  if (digits.length >= 2) {
-    formatted = digits.slice(0, 1) + "/" + digits.slice(1, 2);
+  if (digits.length > 2) {
+    formatted = digits.slice(0, 2) + "/" + digits.slice(2);
   }
 
-  if (digits.length >= 3) {
-    formatted += "/" + digits.slice(2);
+  if (digits.length > 4) {
+    formatted =
+      digits.slice(0, 2) + "/" +
+      digits.slice(2, 4) + "/" +
+      digits.slice(4);
   }
 
   passwordInput.value = formatted;
@@ -1031,12 +1125,13 @@ passwordInput.addEventListener("input", () => {
 passwordForm.addEventListener("submit", (event) => {
   event.preventDefault();
 
-  if (passwordInput.value === "1/1/2009") {
+  if (passwordInput.value === "15/11/2025") {
     passwordError.textContent = "";
     passwordScreen.classList.add("unlocked");
 
     setTimeout(() => {
       passwordScreen.remove();
+      showQuestionGate();
     }, 850);
 
   } else {
@@ -1048,11 +1143,80 @@ passwordForm.addEventListener("submit", (event) => {
   }
 });
 
+// Question Gate
+
+const questionGate = document.getElementById("question-gate");
+const questionNumber = document.getElementById("question-number");
+const questionTitle = document.getElementById("question-title");
+const questionDescription = document.getElementById("question-description");
+const questionMessage = document.getElementById("question-message");
+const yesButton = document.getElementById("yes-button");
+const noButton = document.getElementById("no-button");
+
+const questions = [
+  "Do you love me?",
+  "Am I your favorite person?",
+  "Do you miss me when I'm not around?",
+  "Would you choose me again?",
+  "Are you happy we're together?"
+];
+
+let currentQuestion = 0;
+
+function showQuestionGate() {
+  questionGate.style.display = "flex";
+  document.body.style.overflow = "hidden";
+  showQuestion();
+}
+
+function showQuestion() {
+  questionNumber.textContent =
+    "QUESTION " + String(currentQuestion + 1).padStart(2, "0") + " / 05";
+
+  questionTitle.textContent = questions[currentQuestion];
+
+  questionDescription.textContent =
+    "I hope you know the right answer ♡";
+
+  questionMessage.textContent = "";
+}
+
+yesButton.addEventListener("click", () => {
+  currentQuestion++;
+
+  if (currentQuestion < questions.length) {
+    showQuestion();
+  } else {
+    questionNumber.textContent = "ALL QUESTIONS COMPLETED";
+    questionTitle.textContent = "I knew it! ♡";
+    questionDescription.textContent =
+      "Now, there's a little world waiting for you.";
+    questionMessage.textContent = "Made with love, just for you.";
+
+    document.querySelector(".question-buttons").style.display = "none";
+
+    setTimeout(() => {
+      questionGate.style.display = "none";
+      document.body.style.overflow = "";
+      showMusicIntro();
+    }, 2200);
+  }
+});
+
+noButton.addEventListener("click", () => {
+  questionMessage.textContent =
+    "Wrong answer! Try again, you know it's yes ♡";
+});
+
 // Music Intro
 
 const intro = document.getElementById("music-intro");
 const song = document.getElementById("background-song");
 const enterButton = document.getElementById("enter-site");
+
+function showMusicIntro() {
+  intro.style.display = "flex";
+}
 
 enterButton.addEventListener("click", async () => {
   try {
@@ -1128,6 +1292,7 @@ envelopeButton.addEventListener("click", () => {
     ? "Tap to close"
     : "Tap to open";
 });
+
 </script>
 
 </body>
