@@ -571,6 +571,99 @@ footer {
   pointer-events: none;
 }
 
+/* Password Screen */
+
+#password-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 100000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  text-align: center;
+  background:
+    radial-gradient(ellipse at 50% 42%, rgba(111,75,91,.2), transparent 58%),
+    #09090d;
+  transition: opacity .8s ease, visibility .8s ease;
+}
+
+#password-screen.unlocked {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.password-box {
+  width: min(420px, 100%);
+  padding: 48px 28px;
+  border: 1px solid rgba(201,166,173,.22);
+  background: rgba(255,255,255,.018);
+  box-shadow: 0 20px 70px rgba(0,0,0,.25);
+}
+
+.password-symbol {
+  color: var(--accent);
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 42px;
+  margin-bottom: 18px;
+}
+
+.password-box h2 {
+  color: var(--text);
+  font-size: clamp(38px, 8vw, 52px);
+  margin-bottom: 12px;
+}
+
+.password-box p {
+  margin-bottom: 28px;
+}
+
+#password-form {
+  display: grid;
+  gap: 14px;
+}
+
+#site-password {
+  width: 100%;
+  padding: 15px 16px;
+  border: 1px solid rgba(201,166,173,.35);
+  outline: none;
+  background: rgba(0,0,0,.2);
+  color: var(--text);
+  text-align: center;
+  font: 16px 'DM Sans', sans-serif;
+  letter-spacing: 2px;
+}
+
+#site-password:focus {
+  border-color: var(--accent);
+}
+
+#password-form button {
+  padding: 15px;
+  border: 1px solid var(--accent);
+  background: transparent;
+  color: var(--accent);
+  cursor: pointer;
+  font: 11px 'DM Sans', sans-serif;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  transition: .3s;
+}
+
+#password-form button:hover {
+  background: var(--accent);
+  color: var(--bg);
+}
+
+#password-error {
+  min-height: 22px;
+  margin-top: 15px;
+  color: #d49aa5;
+  font-size: 12px;
+}
+
 /* Mobile */
 
 @media (max-width: 600px) {
@@ -619,6 +712,33 @@ footer {
 </head>
 
 <body>
+
+<!-- PASSWORD SCREEN -->
+
+<div id="password-screen">
+  <div class="password-box">
+    <div class="password-symbol">♡</div>
+    <h2>A Little Secret</h2>
+    <p>Somewhere only we know.</p>
+
+    <form id="password-form">
+      <input
+        id="site-password"
+        type="password"
+        placeholder="D / M / YYYY"
+        aria-label="Website password"
+        autocomplete="off"
+        inputmode="numeric"
+        maxlength="8"
+        required
+      >
+
+      <button type="submit">Unlock Our Universe ♡</button>
+    </form>
+
+    <p id="password-error" role="alert" aria-live="polite"></p>
+  </div>
+</div>
 
 <!-- OPENING -->
 
@@ -857,23 +977,6 @@ footer {
   <source src="Stephen%20Sanchez%20-%20Until%20I%20Found%20You%20(Official%20Video)(MP3_320K).mp3" type="audio/mpeg">
 </audio>
 
-<script>
-const intro = document.getElementById("music-intro");
-const song = document.getElementById("background-song");
-const enterButton = document.getElementById("enter-site");
-
-enterButton.addEventListener("click", async () => {
-  try {
-    await song.play();
-    intro.classList.add("hidden");
-
-    setTimeout(() => intro.remove(), 1000);
-  } catch (error) {
-    console.log("Music playback failed:", error);
-  }
-});
-</script>
-
 <!-- FINAL CHAPTER -->
 
 <section class="ending reveal" id="ending">
@@ -899,6 +1002,69 @@ enterButton.addEventListener("click", async () => {
 </footer>
 
 <script>
+// Password formatting and checking
+
+const passwordScreen = document.getElementById("password-screen");
+const passwordForm = document.getElementById("password-form");
+const passwordInput = document.getElementById("site-password");
+const passwordError = document.getElementById("password-error");
+
+passwordInput.addEventListener("input", () => {
+  // Keep numbers only
+  const digits = passwordInput.value.replace(/\D/g, "").slice(0, 6);
+
+  let formatted = digits;
+
+  // Format the date as D/M/YYYY
+  if (digits.length >= 2) {
+    formatted = digits.slice(0, 1) + "/" + digits.slice(1, 2);
+  }
+
+  if (digits.length >= 3) {
+    formatted += "/" + digits.slice(2);
+  }
+
+  passwordInput.value = formatted;
+  passwordError.textContent = "";
+});
+
+passwordForm.addEventListener("submit", (event) => {
+  event.preventDefault();
+
+  if (passwordInput.value === "1/1/2009") {
+    passwordError.textContent = "";
+    passwordScreen.classList.add("unlocked");
+
+    setTimeout(() => {
+      passwordScreen.remove();
+    }, 850);
+
+  } else {
+    passwordError.textContent =
+      "That date doesn't seem right. Try again ♡";
+
+    passwordInput.value = "";
+    passwordInput.focus();
+  }
+});
+
+// Music Intro
+
+const intro = document.getElementById("music-intro");
+const song = document.getElementById("background-song");
+const enterButton = document.getElementById("enter-site");
+
+enterButton.addEventListener("click", async () => {
+  try {
+    await song.play();
+    intro.classList.add("hidden");
+
+    setTimeout(() => intro.remove(), 1000);
+  } catch (error) {
+    console.log("Music playback failed:", error);
+  }
+});
+
 // Relationship counter: November 15, 2025
 
 const startDate = new Date(2025, 10, 15, 0, 0, 0);
