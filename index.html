@@ -310,19 +310,132 @@ section {
   line-height: 1.9;
 }
 
-/* Letter */
+/* Letter Envelope */
 
 .letter-section {
   background: linear-gradient(180deg, var(--bg), #100e13, var(--bg));
 }
 
-.letter {
+.letter-interactive {
   max-width: 760px;
+  margin: 65px auto 0;
+  text-align: center;
+}
+
+.envelope-button {
+  display: block;
   margin: auto;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.envelope {
+  position: relative;
+  width: min(260px, 75vw);
+  height: 165px;
+  margin: auto;
+  background: #9d737f;
+  border-radius: 5px;
+  box-shadow: 0 15px 45px rgba(0,0,0,.35);
+  perspective: 800px;
+}
+
+.envelope::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: #b58b96;
+  clip-path: polygon(0 0, 100% 0, 50% 62%);
+  z-index: 3;
+  transform-origin: top;
+  transition: transform .8s ease, z-index .8s;
+}
+
+.envelope::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: #825b67;
+  clip-path: polygon(0 0, 50% 58%, 100% 0, 100% 100%, 0 100%);
+  z-index: 2;
+}
+
+.envelope-seal {
+  position: absolute;
+  top: 48%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 43px;
+  height: 43px;
+  border-radius: 50%;
+  background: #d6b2ba;
+  color: #583a43;
+  display: grid;
+  place-items: center;
+  font-size: 24px;
+  z-index: 4;
+  transition: opacity .4s ease;
+}
+
+.envelope-label {
+  display: block;
+  margin-top: 25px;
+  color: var(--accent);
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 25px;
+  font-style: italic;
+}
+
+.envelope-hint {
+  display: block;
+  margin-top: 8px;
+  color: var(--muted);
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.letter-interactive.opened .envelope::before {
+  transform: rotateX(180deg);
+  z-index: 1;
+}
+
+.letter-interactive.opened .envelope-seal {
+  opacity: 0;
+}
+
+.letter-paper {
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transform: translateY(25px);
+  transition:
+    max-height 1.2s ease,
+    opacity .8s ease,
+    transform .8s ease,
+    margin .8s ease;
+  margin-top: 0;
+  pointer-events: none;
+}
+
+.letter-interactive.opened .letter-paper {
+  max-height: 1400px;
+  opacity: 1;
+  transform: translateY(0);
+  margin-top: 45px;
+  pointer-events: auto;
+}
+
+.letter {
   padding: clamp(25px, 7vw, 65px);
   border: 1px solid rgba(201,166,173,.2);
   background: rgba(255,255,255,.018);
   position: relative;
+  text-align: left;
 }
 
 .letter::before {
@@ -665,34 +778,64 @@ footer {
     <div class="chapter-number">CHAPTER 04</div>
     <h2 style="text-align:center;">A Letter to You</h2>
 
-    <div class="letter">
+    <div class="letter-interactive" id="letterInteractive">
 
-      <p>
-        I wish you could see yourself through my eyes, just for
-        a moment, so you could understand how much I love you.
-      </p>
+      <button
+        class="envelope-button"
+        id="envelopeButton"
+        aria-expanded="false"
+        aria-controls="letterPaper"
+        type="button"
+      >
 
-      <p>
-        This past year has been the happiest year of my life.
-        Every little moment, every conversation, every laugh,
-        and every memory we've made has become something
-        I'll always treasure.
-      </p>
+        <div class="envelope">
+          <div class="envelope-seal">♡</div>
+        </div>
 
-      <p>
-        I don't just love having you in my life. I love you,
-        every little thing about you, and the feeling of knowing
-        that I get to share this journey with you.
-      </p>
+        <span class="envelope-label" id="envelopeLabel">
+          A Letter For You
+        </span>
 
-      <p>
-        If I could relive one year of my life, I'd choose this
-        one, every single time. And if I had to choose again,
-        I'd still choose you.
-      </p>
+        <span class="envelope-hint" id="envelopeHint">
+          Tap to open
+        </span>
 
-      <div class="arabic-ending">
-        أنا بجد بجد بحبك يا مريومتييي
+      </button>
+
+      <div class="letter-paper" id="letterPaper">
+
+        <div class="letter">
+
+          <p>
+            I wish you could see yourself through my eyes, just for
+            a moment, so you could understand how much I love you.
+          </p>
+
+          <p>
+            This past year has been the happiest year of my life.
+            Every little moment, every conversation, every laugh,
+            and every memory we've made has become something
+            I'll always treasure.
+          </p>
+
+          <p>
+            I don't just love having you in my life. I love you,
+            every little thing about you, and the feeling of knowing
+            that I get to share this journey with you.
+          </p>
+
+          <p>
+            If I could relive one year of my life, I'd choose this
+            one, every single time. And if I had to choose again,
+            I'd still choose you.
+          </p>
+
+          <div class="arabic-ending">
+            أنا بجد بجد بحبك يا مريومتييي
+          </div>
+
+        </div>
+
       </div>
 
     </div>
@@ -797,6 +940,27 @@ const observer = new IntersectionObserver((entries) => {
 
 document.querySelectorAll(".reveal").forEach(element => {
   observer.observe(element);
+});
+
+// Open and close the letter
+
+const letterInteractive = document.getElementById("letterInteractive");
+const envelopeButton = document.getElementById("envelopeButton");
+const envelopeLabel = document.getElementById("envelopeLabel");
+const envelopeHint = document.getElementById("envelopeHint");
+
+envelopeButton.addEventListener("click", () => {
+  const isOpened = letterInteractive.classList.toggle("opened");
+
+  envelopeButton.setAttribute("aria-expanded", isOpened);
+
+  envelopeLabel.textContent = isOpened
+    ? "A Letter From My Heart"
+    : "A Letter For You";
+
+  envelopeHint.textContent = isOpened
+    ? "Tap to close"
+    : "Tap to open";
 });
 </script>
 
