@@ -76,6 +76,8 @@ p {
   font-size: 14px;
 }
 
+/* BACKGROUND */
+
 .background-glow {
   position: fixed;
   width: 400px;
@@ -89,6 +91,26 @@ p {
 
 .glow-one { top: -180px; left: -150px; }
 .glow-two { right: -180px; bottom: 0; }
+
+/* HIDE MAIN WEBSITE UNTIL EVERYTHING IS READY */
+
+#main-content,
+footer {
+  opacity: 1;
+  transition: opacity 1.2s ease;
+}
+
+body.site-hidden #main-content,
+body.site-hidden footer {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+body:not(.site-hidden) #main-content,
+body:not(.site-hidden) footer {
+  visibility: visible;
+}
 
 /* PASSWORD */
 
@@ -320,114 +342,6 @@ p {
   animation: finalGlow 1.8s ease-in-out infinite alternate;
 }
 
-/* HEART TRANSITION */
-
-#heart-transition {
-  position: fixed;
-  inset: 0;
-  z-index: 99998;
-  display: none;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  pointer-events: none;
-  background: #09090d;
-  opacity: 1;
-}
-
-#heart-transition.active {
-  display: flex;
-  animation: transitionFade 6s ease forwards;
-}
-
-.transition-heart {
-  position: absolute;
-  bottom: -60px;
-  left: var(--left);
-  color: var(--pink-light);
-  opacity: 0;
-  font-size: var(--size);
-  text-shadow: 0 0 18px rgba(201,166,173,.35);
-  animation: heartRise var(--duration) ease-out var(--delay) forwards;
-}
-
-.heart-center {
-  position: relative;
-  z-index: 2;
-  color: var(--pink-light);
-  font-size: 48px;
-  opacity: 0;
-  text-shadow: 0 0 35px rgba(201,166,173,.5);
-  animation: centerHeart 3.5s ease .3s forwards;
-}
-
-@keyframes heartRise {
-  0% {
-    opacity: 0;
-    transform: translateY(10vh) rotate(0deg) scale(.3);
-  }
-  15% {
-    opacity: .9;
-  }
-  75% {
-    opacity: .8;
-  }
-  100% {
-    opacity: 0;
-    transform: translateY(-115vh) rotate(50deg) scale(1.5);
-  }
-}
-
-@keyframes centerHeart {
-  0% { opacity: 0; transform: scale(.2); }
-  25% { opacity: 1; transform: scale(1.3); }
-  55% { opacity: 1; transform: scale(1); }
-  100% { opacity: 0; transform: scale(1.5); }
-}
-
-@keyframes transitionFade {
-  0%, 75% { opacity: 1; }
-  100% { opacity: 0; }
-}
-
-@keyframes questionEnter {
-  from {
-    opacity: 0;
-    transform: translateY(35px) scale(.94);
-    filter: blur(8px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-    filter: blur(0);
-  }
-}
-
-@keyframes shake {
-  0%,100% { transform: translateX(0); }
-  20% { transform: translateX(-7px); }
-  40% { transform: translateX(7px); }
-  60% { transform: translateX(-5px); }
-  80% { transform: translateX(5px); }
-}
-
-@keyframes sparkleFloat {
-  0% {
-    opacity: 0;
-    transform: translateY(15px) scale(.4) rotate(-20deg);
-  }
-  25% { opacity: 1; }
-  100% {
-    opacity: 0;
-    transform: translateY(-90px) scale(1.3) rotate(25deg);
-  }
-}
-
-@keyframes finalGlow {
-  from { text-shadow: 0 0 5px rgba(201,166,173,.1); }
-  to { text-shadow: 0 0 30px rgba(201,166,173,.45); }
-}
-
 /* MUSIC INTRO */
 
 #music-intro {
@@ -487,6 +401,112 @@ p {
 #open-site:disabled {
   opacity: .7;
   cursor: default;
+}
+
+/* HEART TRANSITION */
+
+#heart-transition {
+  position: fixed;
+  inset: 0;
+  z-index: 99998;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  pointer-events: none;
+  background: #09090d;
+  opacity: 1;
+}
+
+#heart-transition.active {
+  display: flex;
+  animation: transitionFade 6s ease forwards;
+}
+
+.transition-heart {
+  position: absolute;
+  bottom: -60px;
+  left: var(--left);
+  color: var(--pink-light);
+  opacity: 0;
+  font-size: var(--size);
+  text-shadow: 0 0 18px rgba(201,166,173,.35);
+  animation: heartRise var(--duration) ease-out var(--delay) forwards;
+}
+
+.heart-center {
+  position: relative;
+  z-index: 2;
+  color: var(--pink-light);
+  font-size: 48px;
+  opacity: 0;
+  text-shadow: 0 0 35px rgba(201,166,173,.5);
+  animation: centerHeart 3.5s ease .3s forwards;
+}
+
+/* ANIMATIONS */
+
+@keyframes heartRise {
+  0% {
+    opacity: 0;
+    transform: translateY(10vh) rotate(0deg) scale(.3);
+  }
+  15% { opacity: .9; }
+  75% { opacity: .8; }
+  100% {
+    opacity: 0;
+    transform: translateY(-115vh) rotate(50deg) scale(1.5);
+  }
+}
+
+@keyframes centerHeart {
+  0% { opacity: 0; transform: scale(.2); }
+  25% { opacity: 1; transform: scale(1.3); }
+  55% { opacity: 1; transform: scale(1); }
+  100% { opacity: 0; transform: scale(1.5); }
+}
+
+@keyframes transitionFade {
+  0%, 75% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+@keyframes questionEnter {
+  from {
+    opacity: 0;
+    transform: translateY(35px) scale(.94);
+    filter: blur(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+@keyframes shake {
+  0%,100% { transform: translateX(0); }
+  20% { transform: translateX(-7px); }
+  40% { transform: translateX(7px); }
+  60% { transform: translateX(-5px); }
+  80% { transform: translateX(5px); }
+}
+
+@keyframes sparkleFloat {
+  0% {
+    opacity: 0;
+    transform: translateY(15px) scale(.4) rotate(-20deg);
+  }
+  25% { opacity: 1; }
+  100% {
+    opacity: 0;
+    transform: translateY(-90px) scale(1.3) rotate(25deg);
+  }
+}
+
+@keyframes finalGlow {
+  from { text-shadow: 0 0 5px rgba(201,166,173,.1); }
+  to { text-shadow: 0 0 30px rgba(201,166,173,.45); }
 }
 
 @keyframes heartbeat {
@@ -865,12 +885,12 @@ footer p {
 </style>
 </head>
 
-<body class="locked">
+<body class="locked site-hidden">
 
 <div class="background-glow glow-one"></div>
 <div class="background-glow glow-two"></div>
 
-<!-- PASSWORD -->
+<!-- PASSWORD SCREEN -->
 
 <div id="password-screen">
   <div class="password-box">
@@ -880,7 +900,16 @@ footer p {
     <p>This little world has a key. Do you remember it?</p>
 
     <form id="password-form">
-      <input id="site-password" type="text" inputmode="numeric" autocomplete="off" placeholder="DD/MM/YYYY" maxlength="10" aria-label="Password" required>
+      <input
+        id="site-password"
+        type="text"
+        inputmode="numeric"
+        autocomplete="off"
+        placeholder="DD/MM/YYYY"
+        maxlength="10"
+        aria-label="Password"
+        required
+      >
       <button type="submit">Unlock ♡</button>
     </form>
 
@@ -888,7 +917,7 @@ footer p {
   </div>
 </div>
 
-<!-- QUESTIONS -->
+<!-- QUESTION SCREEN -->
 
 <div id="question-gate">
   <div class="question-box">
@@ -931,15 +960,17 @@ footer p {
   <div class="heart-center">♡</div>
 </div>
 
-<!-- MUSIC -->
+<!-- MUSIC FILE -->
 
 <audio id="background-music" loop preload="auto">
   <source src="Stephen%20Sanchez%20-%20Until%20I%20Found%20You%20(Official%20Video)(MP3_320K).mp3" type="audio/mpeg">
 </audio>
 
-<!-- WEBSITE -->
+<!-- MAIN WEBSITE -->
 
 <main id="main-content">
+
+  <!-- HERO -->
 
   <section class="hero">
     <div class="hero-content reveal">
@@ -980,14 +1011,17 @@ footer p {
           <strong id="days">0</strong>
           <span>Days</span>
         </div>
+
         <div class="counter-item">
           <strong id="hours">00</strong>
           <span>Hours</span>
         </div>
+
         <div class="counter-item">
           <strong id="minutes">00</strong>
           <span>Minutes</span>
         </div>
+
         <div class="counter-item">
           <strong id="seconds">00</strong>
           <span>Seconds</span>
@@ -1116,6 +1150,7 @@ footer p {
           </p>
 
           <p class="arabic-ending">أنا بجد بجد بحبك يا مريومتييي</p>
+
           <div class="letter-signature">Always yours. ♡</div>
         </div>
       </div>
@@ -1127,6 +1162,7 @@ footer p {
   <section class="ending reveal">
     <div class="eyebrow">And this is only the beginning</div>
     <h2 class="serif">To us, always. ♡</h2>
+
     <p>
       No matter how many memories we make,
       I'll always be grateful that our story began.
@@ -1181,7 +1217,9 @@ passwordForm.addEventListener("submit", (event) => {
     }, 850);
 
   } else {
-    passwordError.textContent = "That date doesn't seem right. Try again ♡";
+    passwordError.textContent =
+      "That date doesn't seem right. Try again ♡";
+
     passwordInput.value = "";
     passwordInput.focus();
   }
@@ -1229,15 +1267,25 @@ function showQuestionGate() {
 }
 
 function showQuestion() {
-  questionNumber.textContent = `QUESTION 0${currentQuestion + 1} / 05`;
+  questionNumber.textContent =
+    `QUESTION 0${currentQuestion + 1} / 05`;
+
   questionTitle.textContent = questions[currentQuestion];
-  questionDescription.textContent = "I hope you know the right answer ♡";
+
+  questionDescription.textContent =
+    "I hope you know the right answer ♡";
+
   questionMessage.textContent = "";
 
   progressFill.style.width =
     `${(currentQuestion / questions.length) * 100}%`;
 
-  questionBox.classList.remove("is-exiting", "finished", "is-entering");
+  questionBox.classList.remove(
+    "is-exiting",
+    "finished",
+    "is-entering"
+  );
+
   void questionBox.offsetWidth;
   questionBox.classList.add("is-entering");
 }
@@ -1247,13 +1295,18 @@ function createSparkles() {
 
   for (let i = 0; i < 10; i++) {
     const sparkle = document.createElement("span");
+
     sparkle.className = "sparkle";
-    sparkle.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+
+    sparkle.textContent =
+      symbols[Math.floor(Math.random() * symbols.length)];
+
     sparkle.style.left = `${10 + Math.random() * 80}%`;
     sparkle.style.top = `${25 + Math.random() * 65}%`;
     sparkle.style.animationDelay = `${Math.random() * .35}s`;
 
     questionBox.appendChild(sparkle);
+
     setTimeout(() => sparkle.remove(), 1900);
   }
 }
@@ -1262,7 +1315,9 @@ function handleYes() {
   if (isTransitioning) return;
 
   isTransitioning = true;
-  questionMessage.textContent = "That's what I wanted to hear ♡";
+
+  questionMessage.textContent =
+    "That's what I wanted to hear ♡";
 
   progressFill.style.width =
     `${((currentQuestion + 1) / questions.length) * 100}%`;
@@ -1300,8 +1355,10 @@ function showFinalMessage() {
 
   questionNumber.textContent = "A LITTLE PROMISE";
   questionTitle.textContent = "I knew it! ♡";
+
   questionDescription.textContent =
     "You make this little universe worth everything.";
+
   questionMessage.textContent =
     "Now, there's something waiting for you...";
 
@@ -1319,6 +1376,7 @@ function showFinalMessage() {
       questionGate.style.display = "none";
       questionGate.classList.remove("visible");
       questionGate.style.opacity = "";
+
       showMusicIntro();
     }, 750);
 
@@ -1344,47 +1402,88 @@ function showMusicIntro() {
 }
 
 
-/* LONG HEART TRANSITION */
+/* HEART TRANSITION */
 
 const heartTransition = document.getElementById("heart-transition");
 
 function playHeartTransition() {
-  heartTransition.innerHTML = '<div class="heart-center">♡</div>';
+  heartTransition.innerHTML =
+    '<div class="heart-center">♡</div>';
+
   heartTransition.style.display = "flex";
   heartTransition.classList.remove("active");
 
   void heartTransition.offsetWidth;
-  heartTransition.classList.add("active");
 
-  /* More hearts, appearing in waves */
+  heartTransition.classList.add("active");
 
   for (let i = 0; i < 65; i++) {
     const heart = document.createElement("span");
 
     heart.className = "transition-heart";
+
     heart.textContent = Math.random() > .25 ? "♡" : "♥";
 
-    heart.style.setProperty("--left", `${Math.random() * 100}%`);
-    heart.style.setProperty("--size", `${14 + Math.random() * 28}px`);
-    heart.style.setProperty("--duration", `${3.2 + Math.random() * 2.5}s`);
-    heart.style.setProperty("--delay", `${Math.random() * 2.2}s`);
+    heart.style.setProperty(
+      "--left",
+      `${Math.random() * 100}%`
+    );
+
+    heart.style.setProperty(
+      "--size",
+      `${14 + Math.random() * 28}px`
+    );
+
+    heart.style.setProperty(
+      "--duration",
+      `${3.2 + Math.random() * 2.5}s`
+    );
+
+    heart.style.setProperty(
+      "--delay",
+      `${Math.random() * 2.2}s`
+    );
 
     heartTransition.appendChild(heart);
   }
 
-  /* Keep the transition visible for the full six seconds */
+  /* Do not reveal the website until the transition is finished */
 
   setTimeout(() => {
-    heartTransition.style.display = "none";
     heartTransition.classList.remove("active");
-    heartTransition.innerHTML = '<div class="heart-center">♡</div>';
+    heartTransition.style.display = "none";
+
+    heartTransition.innerHTML =
+      '<div class="heart-center">♡</div>';
+
+    /* Reveal the website */
+
+    document.body.classList.remove("site-hidden");
+
+    /* Allow the reveal to begin before scrolling */
+
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        document.getElementById("main-content").scrollIntoView({
+          behavior: "smooth",
+          block: "start"
+        });
+      });
+    });
+
   }, 6200);
 }
 
 
 /* OPEN WEBSITE */
 
+let websiteOpening = false;
+
 openSiteButton.addEventListener("click", async () => {
+  if (websiteOpening) return;
+
+  websiteOpening = true;
+
   openSiteButton.disabled = true;
   openSiteButton.textContent = "Opening... ♡";
 
@@ -1402,15 +1501,11 @@ openSiteButton.addEventListener("click", async () => {
 
     document.body.classList.remove("locked");
 
+    /* The website stays hidden behind the heart transition */
+
     playHeartTransition();
 
-    setTimeout(() => {
-      document.getElementById("main-content").scrollIntoView({
-        behavior: "smooth"
-      });
-    }, 4500);
-
-  }, 700);
+  }, 800);
 });
 
 
@@ -1420,18 +1515,29 @@ const startDate = new Date(2025, 10, 15, 0, 0, 0);
 
 function updateCounter() {
   const now = new Date();
+
   const difference = Math.max(0, now - startDate);
+
   const totalSeconds = Math.floor(difference / 1000);
 
   const days = Math.floor(totalSeconds / 86400);
+
   const hours = Math.floor((totalSeconds % 86400) / 3600);
+
   const minutes = Math.floor((totalSeconds % 3600) / 60);
+
   const seconds = totalSeconds % 60;
 
   document.getElementById("days").textContent = days;
-  document.getElementById("hours").textContent = String(hours).padStart(2, "0");
-  document.getElementById("minutes").textContent = String(minutes).padStart(2, "0");
-  document.getElementById("seconds").textContent = String(seconds).padStart(2, "0");
+
+  document.getElementById("hours").textContent =
+    String(hours).padStart(2, "0");
+
+  document.getElementById("minutes").textContent =
+    String(minutes).padStart(2, "0");
+
+  document.getElementById("seconds").textContent =
+    String(seconds).padStart(2, "0");
 }
 
 updateCounter();
