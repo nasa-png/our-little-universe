@@ -979,8 +979,8 @@ footer p {
         type="text"
         inputmode="numeric"
         autocomplete="off"
-        placeholder="DD/MM/YYYY"
-        maxlength="10"
+        placeholder="DD/MM"
+        maxlength="5"
         aria-label="Password"
         required
       >
@@ -1294,19 +1294,12 @@ const passwordError = document.getElementById("password-error");
 
 passwordInput.addEventListener("input", () => {
 
-  const digits = passwordInput.value.replace(/\D/g, "").slice(0, 8);
+  const digits = passwordInput.value.replace(/\D/g, "").slice(0, 4);
 
   let formatted = digits;
 
   if (digits.length > 2) {
     formatted = digits.slice(0, 2) + "/" + digits.slice(2);
-  }
-
-  if (digits.length > 4) {
-    formatted =
-      digits.slice(0, 2) + "/" +
-      digits.slice(2, 4) + "/" +
-      digits.slice(4);
   }
 
   passwordInput.value = formatted;
@@ -1318,7 +1311,7 @@ passwordForm.addEventListener("submit", (event) => {
 
   event.preventDefault();
 
-  if (passwordInput.value === "15/11/2025") {
+  if (passwordInput.value === "15/11") {
 
     passwordError.textContent = "";
     passwordScreen.classList.add("unlocked");
