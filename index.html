@@ -40,6 +40,7 @@ body.locked { overflow: hidden; }
 
 button, input { font: inherit; }
 button { cursor: pointer; }
+
 .serif { font-family: "Cormorant Garamond", serif; }
 
 .section { padding: 110px 22px; }
@@ -92,7 +93,7 @@ p {
 .glow-one { top: -180px; left: -150px; }
 .glow-two { right: -180px; bottom: 0; }
 
-/* HIDE MAIN WEBSITE UNTIL EVERYTHING IS READY */
+/* MAIN VISIBILITY */
 
 #main-content,
 footer {
@@ -562,7 +563,40 @@ body:not(.site-hidden) footer {
   width: 1px;
   height: 75px;
   background: linear-gradient(transparent,var(--pink),transparent);
-  margin: 55px auto 0;
+  margin: 45px auto 0;
+}
+
+/* EXPLORE MORE */
+
+.explore-more {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 35px;
+  padding: 13px 25px;
+  color: var(--pink-light);
+  border: 1px solid var(--line);
+  background: transparent;
+  text-decoration: none;
+  font-size: 10px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  transition: .4s ease;
+}
+
+.explore-more:hover {
+  background: rgba(201,166,173,.1);
+  border-color: var(--pink);
+  transform: translateY(-4px);
+}
+
+.explore-arrow {
+  display: inline-block;
+  transition: transform .4s ease;
+}
+
+.explore-more:hover .explore-arrow {
+  transform: translateY(5px);
 }
 
 /* CHAPTER 01 */
@@ -744,6 +778,12 @@ body:not(.site-hidden) footer {
   pointer-events: none;
 }
 
+.envelope:hover {
+  border-color: var(--pink);
+  transform: translateY(-5px);
+  box-shadow: 0 15px 45px rgba(201,166,173,.07);
+}
+
 .envelope-label {
   position: relative;
   z-index: 2;
@@ -873,6 +913,11 @@ footer p {
   .question-buttons button { width: 100%; }
 
   .beginning-text { font-size: 21px; }
+
+  .explore-more {
+    margin-top: 30px;
+    padding: 13px 20px;
+  }
 }
 
 @media (prefers-reduced-motion:reduce) {
@@ -974,6 +1019,7 @@ footer p {
 
   <section class="hero">
     <div class="hero-content reveal">
+
       <div class="hero-small">A story written in little moments</div>
 
       <h1 class="serif">
@@ -987,14 +1033,23 @@ footer p {
         This little universe is for you.
       </p>
 
+      <!-- EXPLORE MORE BUTTON -->
+
+      <a href="#beginning" class="explore-more">
+        Explore More
+        <span class="explore-arrow">↓</span>
+      </a>
+
       <div class="hero-line"></div>
+
     </div>
   </section>
 
   <!-- CHAPTER 01 -->
 
-  <section class="section chapter">
+  <section class="section chapter" id="beginning">
     <div class="container center reveal">
+
       <div class="chapter-number">CHAPTER 01</div>
       <h2>Every Story Has a Beginning</h2>
       <div class="date-label">November 15, 2025</div>
@@ -1007,6 +1062,7 @@ footer p {
       </p>
 
       <div class="counter-grid">
+
         <div class="counter-item">
           <strong id="days">0</strong>
           <span>Days</span>
@@ -1026,9 +1082,11 @@ footer p {
           <strong id="seconds">00</strong>
           <span>Seconds</span>
         </div>
+
       </div>
 
       <p class="counter-note">And every second has been worth it.</p>
+
     </div>
   </section>
 
@@ -1036,6 +1094,7 @@ footer p {
 
   <section class="section chapter" id="memories">
     <div class="container reveal center">
+
       <div class="chapter-number">CHAPTER 02</div>
       <h2>Our Memories</h2>
 
@@ -1046,6 +1105,7 @@ footer p {
       </p>
 
       <div class="memory-grid">
+
         <div class="memory-card">
           <img src="images/IMG-20261006-WA0069.jpg" alt="A memory of us" loading="lazy">
           <div class="memory-caption">A little moment ♡</div>
@@ -1065,6 +1125,7 @@ footer p {
           <img src="images/IMG-20261109-WA0043.jpg" alt="A moment together" loading="lazy">
           <div class="memory-caption">Just us ♡</div>
         </div>
+
       </div>
     </div>
   </section>
@@ -1073,12 +1134,14 @@ footer p {
 
   <section class="section chapter">
     <div class="container center reveal">
+
       <div class="chapter-number">CHAPTER 03</div>
       <h2>The Little Things</h2>
 
       <p>It's never just one thing. It's all the little things that make you, you.</p>
 
       <div class="little-things-grid">
+
         <div class="little-card">
           <div class="symbol">♡</div>
           <h3>Your Smile</h3>
@@ -1102,6 +1165,7 @@ footer p {
           <h3>Just Being You</h3>
           <p>Nothing more, nothing less. Just you.</p>
         </div>
+
       </div>
     </div>
   </section>
@@ -1110,21 +1174,33 @@ footer p {
 
   <section class="section letter-section">
     <div class="container center reveal">
+
       <div class="chapter-number">CHAPTER 04</div>
       <h2>A Letter For You</h2>
 
-      <p>There are things I don't always know how to say, so I wrote them down instead.</p>
+      <p>
+        There are things I don't always know how to say,
+        so I wrote them down instead.
+      </p>
 
       <div class="envelope-area">
-        <div class="envelope" id="envelope">
+
+        <!-- CLOSED LETTER -->
+
+        <div class="envelope" id="envelope" role="button" tabindex="0" aria-label="Open your letter">
+
           <div class="envelope-label">
             <span>♡</span>
             <h3 class="serif">A little letter</h3>
             <p>Tap to open</p>
           </div>
+
         </div>
 
+        <!-- LETTER CONTENT -->
+
         <div class="letter-content" id="letter-content">
+
           <p>
             I wish you could see yourself through my eyes, just for
             a moment, so you could understand how much I love you.
@@ -1149,10 +1225,16 @@ footer p {
             I'd still choose you.
           </p>
 
-          <p class="arabic-ending">أنا بجد بجد بحبك يا مريومتييي</p>
+          <p class="arabic-ending">
+            أنا بجد بجد بحبك يا مريومتييي
+          </p>
 
-          <div class="letter-signature">Always yours. ♡</div>
+          <div class="letter-signature">
+            Always yours. ♡
+          </div>
+
         </div>
+
       </div>
     </div>
   </section>
@@ -1160,13 +1242,16 @@ footer p {
   <!-- ENDING -->
 
   <section class="ending reveal">
+
     <div class="eyebrow">And this is only the beginning</div>
+
     <h2 class="serif">To us, always. ♡</h2>
 
     <p>
       No matter how many memories we make,
       I'll always be grateful that our story began.
     </p>
+
   </section>
 
 </main>
@@ -1185,6 +1270,7 @@ const passwordInput = document.getElementById("site-password");
 const passwordError = document.getElementById("password-error");
 
 passwordInput.addEventListener("input", () => {
+
   const digits = passwordInput.value.replace(/\D/g, "").slice(0, 8);
 
   let formatted = digits;
@@ -1202,12 +1288,15 @@ passwordInput.addEventListener("input", () => {
 
   passwordInput.value = formatted;
   passwordError.textContent = "";
+
 });
 
 passwordForm.addEventListener("submit", (event) => {
+
   event.preventDefault();
 
   if (passwordInput.value === "15/11/2025") {
+
     passwordError.textContent = "";
     passwordScreen.classList.add("unlocked");
 
@@ -1217,12 +1306,15 @@ passwordForm.addEventListener("submit", (event) => {
     }, 850);
 
   } else {
+
     passwordError.textContent =
       "That date doesn't seem right. Try again ♡";
 
     passwordInput.value = "";
     passwordInput.focus();
+
   }
+
 });
 
 
@@ -1258,15 +1350,18 @@ let currentQuestion = 0;
 let isTransitioning = false;
 
 function showQuestionGate() {
+
   questionGate.style.display = "flex";
 
   requestAnimationFrame(() => {
     questionGate.classList.add("visible");
     showQuestion();
   });
+
 }
 
 function showQuestion() {
+
   questionNumber.textContent =
     `QUESTION 0${currentQuestion + 1} / 05`;
 
@@ -1288,12 +1383,15 @@ function showQuestion() {
 
   void questionBox.offsetWidth;
   questionBox.classList.add("is-entering");
+
 }
 
 function createSparkles() {
+
   const symbols = ["♡", "✦", "✧", "♥"];
 
   for (let i = 0; i < 10; i++) {
+
     const sparkle = document.createElement("span");
 
     sparkle.className = "sparkle";
@@ -1308,10 +1406,13 @@ function createSparkles() {
     questionBox.appendChild(sparkle);
 
     setTimeout(() => sparkle.remove(), 1900);
+
   }
+
 }
 
 function handleYes() {
+
   if (isTransitioning) return;
 
   isTransitioning = true;
@@ -1328,18 +1429,26 @@ function handleYes() {
   questionBox.classList.add("is-exiting");
 
   setTimeout(() => {
+
     currentQuestion++;
 
     if (currentQuestion < questions.length) {
+
       showQuestion();
       isTransitioning = false;
+
     } else {
+
       showFinalMessage();
+
     }
+
   }, 450);
+
 }
 
 function handleNo() {
+
   if (isTransitioning) return;
 
   questionMessage.textContent = noMessages[currentQuestion];
@@ -1347,9 +1456,11 @@ function handleNo() {
   questionBox.classList.remove("shake");
   void questionBox.offsetWidth;
   questionBox.classList.add("shake");
+
 }
 
 function showFinalMessage() {
+
   questionBox.classList.remove("is-exiting");
   questionBox.classList.add("finished");
 
@@ -1370,17 +1481,21 @@ function showFinalMessage() {
   createSparkles();
 
   setTimeout(() => {
+
     questionGate.style.opacity = "0";
 
     setTimeout(() => {
+
       questionGate.style.display = "none";
       questionGate.classList.remove("visible");
       questionGate.style.opacity = "";
 
       showMusicIntro();
+
     }, 750);
 
   }, 2600);
+
 }
 
 yesButton.addEventListener("click", handleYes);
@@ -1394,11 +1509,13 @@ const openSiteButton = document.getElementById("open-site");
 const backgroundMusic = document.getElementById("background-music");
 
 function showMusicIntro() {
+
   musicIntro.style.display = "flex";
 
   requestAnimationFrame(() => {
     musicIntro.classList.add("visible");
   });
+
 }
 
 
@@ -1407,6 +1524,7 @@ function showMusicIntro() {
 const heartTransition = document.getElementById("heart-transition");
 
 function playHeartTransition() {
+
   heartTransition.innerHTML =
     '<div class="heart-center">♡</div>';
 
@@ -1418,6 +1536,7 @@ function playHeartTransition() {
   heartTransition.classList.add("active");
 
   for (let i = 0; i < 65; i++) {
+
     const heart = document.createElement("span");
 
     heart.className = "transition-heart";
@@ -1445,33 +1564,34 @@ function playHeartTransition() {
     );
 
     heartTransition.appendChild(heart);
+
   }
 
-  /* Do not reveal the website until the transition is finished */
-
   setTimeout(() => {
+
     heartTransition.classList.remove("active");
     heartTransition.style.display = "none";
 
     heartTransition.innerHTML =
       '<div class="heart-center">♡</div>';
 
-    /* Reveal the website */
-
     document.body.classList.remove("site-hidden");
 
-    /* Allow the reveal to begin before scrolling */
-
     requestAnimationFrame(() => {
+
       requestAnimationFrame(() => {
+
         document.getElementById("main-content").scrollIntoView({
           behavior: "smooth",
           block: "start"
         });
+
       });
+
     });
 
   }, 6200);
+
 }
 
 
@@ -1480,6 +1600,7 @@ function playHeartTransition() {
 let websiteOpening = false;
 
 openSiteButton.addEventListener("click", async () => {
+
   if (websiteOpening) return;
 
   websiteOpening = true;
@@ -1488,24 +1609,28 @@ openSiteButton.addEventListener("click", async () => {
   openSiteButton.textContent = "Opening... ♡";
 
   try {
+
     await backgroundMusic.play();
+
   } catch (error) {
+
     console.log("Music playback was not available:", error);
+
   }
 
   musicIntro.style.opacity = "0";
 
   setTimeout(() => {
+
     musicIntro.style.display = "none";
     musicIntro.classList.remove("visible");
 
     document.body.classList.remove("locked");
 
-    /* The website stays hidden behind the heart transition */
-
     playHeartTransition();
 
   }, 800);
+
 });
 
 
@@ -1514,6 +1639,7 @@ openSiteButton.addEventListener("click", async () => {
 const startDate = new Date(2025, 10, 15, 0, 0, 0);
 
 function updateCounter() {
+
   const now = new Date();
 
   const difference = Math.max(0, now - startDate);
@@ -1538,42 +1664,81 @@ function updateCounter() {
 
   document.getElementById("seconds").textContent =
     String(seconds).padStart(2, "0");
+
 }
 
 updateCounter();
 setInterval(updateCounter, 1000);
 
 
-/* LETTER */
+/* LETTER OPENING */
 
 const envelope = document.getElementById("envelope");
 const letterContent = document.getElementById("letter-content");
 
-envelope.addEventListener("click", () => {
+function openLetter() {
+
+  if (letterContent.classList.contains("open")) return;
+
   envelope.style.display = "none";
   letterContent.classList.add("open");
+
+}
+
+envelope.addEventListener("click", openLetter);
+
+envelope.addEventListener("keydown", (event) => {
+
+  if (event.key === "Enter" || event.key === " ") {
+
+    event.preventDefault();
+    openLetter();
+
+  }
+
+});
+
+
+/* SMOOTH EXPLORE MORE NAVIGATION */
+
+document.querySelector(".explore-more").addEventListener("click", (event) => {
+
+  event.preventDefault();
+
+  document.getElementById("beginning").scrollIntoView({
+    behavior: "smooth",
+    block: "start"
+  });
+
 });
 
 
 /* SCROLL REVEAL */
 
 const revealObserver = new IntersectionObserver((entries) => {
+
   entries.forEach((entry) => {
+
     if (entry.isIntersecting) {
+
       entry.target.classList.add("active");
       revealObserver.unobserve(entry.target);
+
     }
+
   });
+
 }, {
   threshold: 0.12
 });
 
 document.querySelectorAll(".reveal").forEach((element) => {
+
   revealObserver.observe(element);
+
 });
 
 </script>
 
 </body>
 </html>
-
