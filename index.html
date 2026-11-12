@@ -819,6 +819,35 @@ body:not(.site-hidden) footer {
   margin-bottom: 20px;
 }
 
+/* TYPEWRITER EFFECT */
+
+.letter-content p,
+.letter-signature {
+  visibility: hidden;
+}
+
+.letter-content p.typing,
+.letter-signature.typing,
+.letter-content p.typed,
+.letter-signature.typed {
+  visibility: visible;
+}
+
+.typing-cursor::after {
+  content: "";
+  display: inline-block;
+  width: 2px;
+  height: .9em;
+  background: var(--pink-light);
+  margin-left: 4px;
+  vertical-align: -2px;
+  animation: cursorBlink .75s steps(2, start) infinite;
+}
+
+@keyframes cursorBlink {
+  to { visibility: hidden; }
+}
+
 .letter-content .arabic-ending {
   direction: rtl;
   text-align: center;
@@ -1033,8 +1062,6 @@ footer p {
         This little universe is for you.
       </p>
 
-      <!-- EXPLORE MORE BUTTON -->
-
       <a href="#beginning" class="explore-more">
         Explore More
         <span class="explore-arrow">↓</span>
@@ -1185,8 +1212,6 @@ footer p {
 
       <div class="envelope-area">
 
-        <!-- CLOSED LETTER -->
-
         <div class="envelope" id="envelope" role="button" tabindex="0" aria-label="Open your letter">
 
           <div class="envelope-label">
@@ -1196,8 +1221,6 @@ footer p {
           </div>
 
         </div>
-
-        <!-- LETTER CONTENT -->
 
         <div class="letter-content" id="letter-content">
 
@@ -1671,17 +1694,88 @@ updateCounter();
 setInterval(updateCounter, 1000);
 
 
-/* LETTER OPENING */
+/* LETTER TYPEWRITER */
 
 const envelope = document.getElementById("envelope");
 const letterContent = document.getElementById("letter-content");
 
+let letterStarted = false;
+
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+async function typeElement(element, speed = 38) {
+
+  const originalText = element.textContent;
+  const characters = Array.from(originalText);
+
+  element.textContent = "";
+  element.classList.add("typing", "typing-cursor");
+
+  for (const character of characters) {
+
+    element.textContent += character;
+
+    await sleep(
+      character === "." || character === "," ? speed * 5 :
+      character === "!" || character === "?" ? speed * 6 :
+      character === " " ? speed * 0.7 :
+      speed
+    );
+
+  }
+
+  element.classList.remove("typing", "typing-cursor");
+  element.classList.add("typed");
+
+}
+
+async function startLetterTyping() {
+
+  if (letterStarted) return;
+
+  letterStarted = true;
+
+  const paragraphs = Array.from(
+    letterContent.querySelectorAll("p")
+  );
+
+  const signature = letterContent.querySelector(".letter-signature");
+
+  const typingSpeed = window.matchMedia(
+    "(prefers-reduced-motion: reduce)"
+  ).matches ? 1 : 35;
+
+  for (const paragraph of paragraphs) {
+
+    await typeElement(paragraph, typingSpeed);
+    await sleep(450);
+
+  }
+
+  await sleep(350);
+  await typeElement(signature, typingSpeed);
+
+}
+
 function openLetter() {
 
-  if (letterContent.classList.contains("open")) return;
+  if (letterStarted) return;
 
-  envelope.style.display = "none";
-  letterContent.classList.add("open");
+  envelope.style.opacity = "0";
+  envelope.style.transform = "scale(.92) translateY(-10px)";
+  envelope.style.pointerEvents = "none";
+
+  setTimeout(() => {
+
+    envelope.style.display = "none";
+
+    letterContent.classList.add("open");
+
+    startLetterTyping();
+
+  }, 450);
 
 }
 
