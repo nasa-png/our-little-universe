@@ -77,7 +77,7 @@ p {
   font-size: 14px;
 }
 
-/* BACKGROUND */
+/* ORIGINAL BACKGROUND GLOW */
 
 .background-glow {
   position: fixed;
@@ -92,6 +92,161 @@ p {
 
 .glow-one { top: -180px; left: -150px; }
 .glow-two { right: -180px; bottom: 0; }
+
+/* NEW AMBIENT BACKGROUND */
+
+#ambient-background {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 1.5s ease;
+}
+
+body:not(.locked) #ambient-background {
+  opacity: 1;
+}
+
+#main-content,
+footer {
+  position: relative;
+  z-index: 1;
+}
+
+.ambient-aurora {
+  position: absolute;
+  width: 75vw;
+  height: 75vw;
+  max-width: 850px;
+  max-height: 850px;
+  border-radius: 50%;
+  filter: blur(100px);
+  opacity: .12;
+  animation: auroraDrift 28s ease-in-out infinite alternate;
+}
+
+.aurora-one {
+  top: -35%;
+  left: -25%;
+  background: radial-gradient(circle, #986477 0%, #593b58 35%, transparent 70%);
+}
+
+.aurora-two {
+  right: -30%;
+  bottom: -35%;
+  background: radial-gradient(circle, #76516d 0%, #45324e 38%, transparent 70%);
+  animation-delay: -12s;
+}
+
+.aurora-three {
+  top: 35%;
+  left: 30%;
+  width: 45vw;
+  height: 45vw;
+  background: radial-gradient(circle, #b47d8e 0%, transparent 68%);
+  opacity: .055;
+  animation-delay: -7s;
+}
+
+#ambient-stars {
+  position: absolute;
+  inset: 0;
+}
+
+.ambient-star {
+  position: absolute;
+  width: var(--star-size);
+  height: var(--star-size);
+  left: var(--star-x);
+  top: var(--star-y);
+  border-radius: 50%;
+  background: var(--star-color);
+  opacity: var(--star-opacity);
+  box-shadow: 0 0 9px rgba(231,203,209,.45);
+  animation: starTwinkle var(--star-duration) ease-in-out var(--star-delay) infinite alternate;
+}
+
+.shooting-star {
+  position: absolute;
+  width: 90px;
+  height: 1px;
+  top: var(--shoot-y);
+  left: var(--shoot-x);
+  opacity: 0;
+  transform: rotate(-35deg);
+  transform-origin: right center;
+  background: linear-gradient(90deg, transparent, rgba(231,203,209,.8), #fff);
+  filter: drop-shadow(0 0 4px rgba(231,203,209,.5));
+  animation: shootingStar 9s ease-in-out var(--shoot-delay) infinite;
+}
+
+.shooting-star::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  top: -2px;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 0 10px 3px rgba(231,203,209,.6);
+}
+
+.ambient-petal {
+  position: absolute;
+  top: -30px;
+  left: var(--petal-x);
+  width: 9px;
+  height: 14px;
+  border-radius: 80% 10% 80% 10%;
+  background: linear-gradient(145deg, rgba(231,203,209,.55), rgba(201,166,173,.12));
+  opacity: 0;
+  transform: rotate(var(--petal-rotation));
+  animation: petalFall var(--petal-duration) linear var(--petal-delay) infinite;
+}
+
+#pointer-glow {
+  position: absolute;
+  width: 230px;
+  height: 230px;
+  border-radius: 50%;
+  left: 0;
+  top: 0;
+  opacity: 0;
+  transform: translate(-50%,-50%);
+  background: radial-gradient(circle, rgba(201,166,173,.09), rgba(130,76,91,.035) 42%, transparent 70%);
+  transition: opacity .5s ease;
+  will-change: left, top;
+}
+
+#ambient-background.pointer-active #pointer-glow {
+  opacity: 1;
+}
+
+@keyframes auroraDrift {
+  from { transform: translate3d(-4%,0,0) scale(.95) rotate(-8deg); }
+  to { transform: translate3d(8%,7%,0) scale(1.12) rotate(12deg); }
+}
+
+@keyframes starTwinkle {
+  from { opacity: calc(var(--star-opacity) * .35); transform: scale(.7); }
+  to { opacity: var(--star-opacity); transform: scale(1.35); }
+}
+
+@keyframes shootingStar {
+  0%, 72%, 100% { opacity: 0; transform: translate(0,0) rotate(-35deg); }
+  74% { opacity: .9; }
+  82% { opacity: 0; transform: translate(-230px,145px) rotate(-35deg); }
+}
+
+@keyframes petalFall {
+  0% { opacity: 0; transform: translate3d(0,-5vh,0) rotate(0deg); }
+  10% { opacity: .55; }
+  90% { opacity: .35; }
+  100% { opacity: 0; transform: translate3d(var(--petal-drift),110vh,0) rotate(500deg); }
+}
 
 /* MAIN VISIBILITY */
 
@@ -748,6 +903,315 @@ body:not(.site-hidden) footer {
   text-align: center;
 }
 
+/* NEW: 100 LITTLE REASONS */
+
+.reasons-section {
+  border-top: 1px solid var(--line);
+  overflow: hidden;
+}
+
+.reasons-intro {
+  max-width: 530px;
+  margin: 0 auto 35px;
+}
+
+.reasons-progress-wrap {
+  max-width: 420px;
+  margin: 0 auto 35px;
+}
+
+.reasons-progress-label {
+  display: flex;
+  justify-content: space-between;
+  color: var(--muted);
+  font-size: 10px;
+  letter-spacing: 2px;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+}
+
+.reasons-progress {
+  height: 2px;
+  background: rgba(201,166,173,.13);
+  overflow: hidden;
+}
+
+.reasons-progress-fill {
+  height: 100%;
+  width: 0;
+  background: var(--pink);
+  transition: width .4s ease;
+}
+
+.reasons-grid {
+  display: grid;
+  grid-template-columns: repeat(5,minmax(0,1fr));
+  gap: 12px;
+}
+
+.reason-card {
+  min-height: 145px;
+  perspective: 900px;
+  border: 0;
+  padding: 0;
+  background: transparent;
+  color: inherit;
+  text-align: center;
+}
+
+.reason-inner {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 145px;
+  transform-style: preserve-3d;
+  transition: transform .7s cubic-bezier(.2,.7,.2,1);
+}
+
+.reason-card.revealed .reason-inner {
+  transform: rotateY(180deg);
+}
+
+.reason-front,
+.reason-back {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 12px;
+  border: 1px solid var(--line);
+  background: linear-gradient(145deg,rgba(201,166,173,.075),rgba(255,255,255,.012));
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.reason-front {
+  transition: border-color .3s ease, background .3s ease;
+}
+
+.reason-card:hover .reason-front {
+  border-color: rgba(201,166,173,.55);
+  background: rgba(201,166,173,.09);
+}
+
+.reason-front .reason-heart {
+  color: var(--pink);
+  font-size: 23px;
+  margin-bottom: 10px;
+}
+
+.reason-front span:last-child {
+  color: var(--muted);
+  font-size: 9px;
+  letter-spacing: 2px;
+}
+
+.reason-back {
+  transform: rotateY(180deg);
+  border-color: rgba(201,166,173,.45);
+  background: linear-gradient(145deg,#241c24,#15131a);
+}
+
+.reason-back span {
+  color: var(--pink-light);
+  font-family: "Cormorant Garamond",serif;
+  font-size: 17px;
+  line-height: 1.35;
+}
+
+.reason-card:focus-visible {
+  outline: 2px solid var(--pink-light);
+  outline-offset: 4px;
+}
+
+.reasons-note {
+  margin-top: 28px;
+  font-family: "Cormorant Garamond",serif;
+  color: var(--pink-light);
+  font-size: 20px;
+}
+
+/* NEW: THE STAR MAP */
+
+.starmap-section {
+  border-top: 1px solid var(--line);
+  overflow: hidden;
+}
+
+.starmap-intro {
+  max-width: 520px;
+  margin: 0 auto 38px;
+}
+
+.star-map {
+  position: relative;
+  width: 100%;
+  height: 460px;
+  max-width: 760px;
+  margin: 0 auto;
+  overflow: hidden;
+  border: 1px solid rgba(201,166,173,.2);
+  background:
+    radial-gradient(ellipse at 50% 50%,rgba(130,76,91,.12),transparent 65%),
+    linear-gradient(145deg,rgba(21,19,27,.96),rgba(10,10,16,.96));
+  box-shadow: inset 0 0 65px rgba(0,0,0,.35);
+}
+
+.star-map::before,
+.star-map::after {
+  content: "";
+  position: absolute;
+  border: 1px solid rgba(201,166,173,.055);
+  border-radius: 50%;
+  width: 430px;
+  height: 430px;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%,-50%);
+  pointer-events: none;
+}
+
+.star-map::after {
+  width: 300px;
+  height: 300px;
+}
+
+.map-constellation {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: .45;
+  pointer-events: none;
+}
+
+.map-constellation path {
+  fill: none;
+  stroke: rgba(201,166,173,.45);
+  stroke-width: 1.2;
+  stroke-dasharray: 4 7;
+}
+
+.map-star {
+  position: absolute;
+  z-index: 2;
+  left: var(--star-left);
+  top: var(--star-top);
+  width: 35px;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--pink-light);
+  transform: translate(-50%,-50%);
+  transition: transform .3s ease;
+}
+
+.map-star::before {
+  content: "";
+  position: absolute;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #f4dce2;
+  box-shadow: 0 0 8px 3px rgba(231,203,209,.35), 0 0 22px rgba(201,166,173,.45);
+  transition: .3s ease;
+}
+
+.map-star::after {
+  content: "";
+  position: absolute;
+  inset: 2px;
+  border: 1px solid rgba(231,203,209,.2);
+  border-radius: 50%;
+  opacity: 0;
+  transform: scale(.5);
+  transition: .3s ease;
+}
+
+.map-star:hover,
+.map-star.selected {
+  transform: translate(-50%,-50%) scale(1.25);
+}
+
+.map-star:hover::after,
+.map-star.selected::after {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.map-star.selected::before {
+  background: #fff;
+  box-shadow: 0 0 12px 5px rgba(231,203,209,.5), 0 0 30px rgba(201,166,173,.55);
+}
+
+.map-star:focus-visible {
+  outline: 1px solid var(--pink-light);
+  outline-offset: 3px;
+}
+
+.map-star-label {
+  position: absolute;
+  top: 24px;
+  left: 50%;
+  width: max-content;
+  max-width: 105px;
+  transform: translateX(-50%);
+  color: rgba(231,203,209,.65);
+  font-size: 9px;
+  letter-spacing: 1px;
+  pointer-events: none;
+}
+
+.star-map-hint {
+  position: absolute;
+  bottom: 17px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  color: rgba(201,166,173,.6);
+  font-size: 9px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  pointer-events: none;
+}
+
+.star-memory-panel {
+  max-width: 600px;
+  min-height: 170px;
+  margin: 25px auto 0;
+  padding: 28px 24px;
+  border: 1px solid var(--line);
+  background: rgba(255,255,255,.018);
+  text-align: center;
+  animation: boxAppear .5s ease both;
+}
+
+.star-memory-date {
+  color: var(--pink);
+  font-size: 9px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+.star-memory-panel h3 {
+  color: var(--pink-light);
+  font-size: 30px;
+  margin-bottom: 8px;
+}
+
+.star-memory-panel p {
+  max-width: 460px;
+  margin: auto;
+  font-size: 13px;
+}
+
 /* LETTER */
 
 .letter-section { border-top: 1px solid var(--line); }
@@ -866,7 +1330,7 @@ body:not(.site-hidden) footer {
   margin-top: 25px;
 }
 
-/* ENDING */
+/* ORIGINAL ENDING */
 
 .ending {
   padding: 120px 22px;
@@ -947,6 +1411,36 @@ footer p {
     margin-top: 30px;
     padding: 13px 20px;
   }
+
+  .reasons-grid {
+    grid-template-columns: repeat(2,minmax(0,1fr));
+    gap: 10px;
+  }
+
+  .reason-card,
+  .reason-inner {
+    min-height: 135px;
+    height: 135px;
+  }
+
+  .reason-back span { font-size: 16px; }
+
+  .star-map { height: 390px; }
+
+  .map-star-label {
+    font-size: 8px;
+    max-width: 75px;
+    white-space: normal;
+  }
+
+  .star-memory-panel { padding: 24px 17px; }
+
+  .ambient-aurora {
+    filter: blur(75px);
+    opacity: .1;
+  }
+
+  #pointer-glow { display: none; }
 }
 
 @media (prefers-reduced-motion:reduce) {
@@ -955,6 +1449,8 @@ footer p {
     animation-duration: .01ms !important;
     transition-duration: .01ms !important;
   }
+
+  #pointer-glow { display: none; }
 }
 </style>
 </head>
@@ -963,6 +1459,19 @@ footer p {
 
 <div class="background-glow glow-one"></div>
 <div class="background-glow glow-two"></div>
+
+<!-- NEW AMBIENT BACKGROUND -->
+<div id="ambient-background" aria-hidden="true">
+  <div class="ambient-aurora aurora-one"></div>
+  <div class="ambient-aurora aurora-two"></div>
+  <div class="ambient-aurora aurora-three"></div>
+  <div id="ambient-stars"></div>
+  <div class="shooting-star" style="--shoot-x:85%;--shoot-y:18%;--shoot-delay:2s"></div>
+  <div class="shooting-star" style="--shoot-x:65%;--shoot-y:42%;--shoot-delay:6s"></div>
+  <div class="shooting-star" style="--shoot-x:95%;--shoot-y:70%;--shoot-delay:4s"></div>
+  <div id="ambient-petals"></div>
+  <div id="pointer-glow"></div>
+</div>
 
 <!-- PASSWORD SCREEN -->
 
@@ -1197,12 +1706,82 @@ footer p {
     </div>
   </section>
 
-  <!-- CHAPTER 04 -->
+  <!-- CHAPTER 04: 100 LITTLE REASONS -->
+
+  <section class="section chapter reasons-section" id="reasons">
+    <div class="container center reveal">
+
+      <div class="chapter-number">CHAPTER 04</div>
+      <h2>100 Little Reasons</h2>
+
+      <p class="reasons-intro">
+        A hundred little things I love about you.
+        Some are big, some are tiny, but every single one is yours.
+        Tap a card and let me remind you.
+      </p>
+
+      <div class="reasons-progress-wrap">
+        <div class="reasons-progress-label">
+          <span>Reasons discovered</span>
+          <span id="reasons-count">0 / 100</span>
+        </div>
+        <div class="reasons-progress">
+          <div class="reasons-progress-fill" id="reasons-progress-fill"></div>
+        </div>
+      </div>
+
+      <div class="reasons-grid" id="reasons-grid"></div>
+
+      <div class="reasons-note">
+        And somehow, a hundred still aren't enough. ♡
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CHAPTER 05: THE STAR MAP -->
+
+  <section class="section chapter starmap-section" id="star-map">
+    <div class="container center reveal">
+
+      <div class="chapter-number">CHAPTER 05</div>
+      <h2>The Star Map</h2>
+
+      <p class="starmap-intro">
+        If our memories were stars, this would be our little sky.
+        Every light holds a moment I never want to lose.
+        Tap a star to discover its story.
+      </p>
+
+      <div class="star-map" id="star-map-canvas">
+
+        <svg class="map-constellation" viewBox="0 0 1000 600" preserveAspectRatio="none" aria-hidden="true">
+          <path d="M110 150 L260 235 L430 120 L590 220 L770 130 L900 270" />
+          <path d="M260 235 L350 410 L530 350 L690 470 L900 270" />
+          <path d="M430 120 L530 350" />
+        </svg>
+
+        <div class="star-map-hint">Choose a star · Find a memory</div>
+
+      </div>
+
+      <div class="star-memory-panel" id="star-memory-panel" aria-live="polite">
+        <div class="star-memory-date" id="star-memory-date">A LITTLE UNIVERSE</div>
+        <h3 class="serif" id="star-memory-title">Our story, written in stars</h3>
+        <p id="star-memory-description">
+          Choose one of the stars above. There's a little memory waiting for you.
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CHAPTER 06: THE LETTER -->
 
   <section class="section letter-section">
     <div class="container center reveal">
 
-      <div class="chapter-number">CHAPTER 04</div>
+      <div class="chapter-number">CHAPTER 06</div>
       <h2>A Letter For You</h2>
 
       <p>
@@ -1262,7 +1841,7 @@ footer p {
     </div>
   </section>
 
-  <!-- ENDING -->
+  <!-- ORIGINAL ENDING: PRESERVED -->
 
   <section class="ending reveal">
 
@@ -1284,6 +1863,87 @@ footer p {
 </footer>
 
 <script>
+
+/* AMBIENT BACKGROUND */
+
+const ambientStars = document.getElementById("ambient-stars");
+const ambientPetals = document.getElementById("ambient-petals");
+const ambientBackground = document.getElementById("ambient-background");
+const pointerGlow = document.getElementById("pointer-glow");
+
+const reducedMotion = window.matchMedia(
+  "(prefers-reduced-motion: reduce)"
+).matches;
+
+if (!reducedMotion) {
+
+  for (let i = 0; i < 75; i++) {
+
+    const star = document.createElement("span");
+
+    star.className = "ambient-star";
+
+    star.style.setProperty("--star-x", `${Math.random() * 100}%`);
+    star.style.setProperty("--star-y", `${Math.random() * 100}%`);
+    star.style.setProperty("--star-size", `${1 + Math.random() * 2}px`);
+    star.style.setProperty("--star-opacity", `${.25 + Math.random() * .55}`);
+    star.style.setProperty("--star-duration", `${2 + Math.random() * 5}s`);
+    star.style.setProperty("--star-delay", `${Math.random() * -5}s`);
+
+    star.style.setProperty(
+      "--star-color",
+      Math.random() > .65 ? "#e7cbd1" : "#ffffff"
+    );
+
+    ambientStars.appendChild(star);
+
+  }
+
+  for (let i = 0; i < 9; i++) {
+
+    const petal = document.createElement("span");
+
+    petal.className = "ambient-petal";
+
+    petal.style.setProperty("--petal-x", `${Math.random() * 100}%`);
+    petal.style.setProperty("--petal-duration", `${18 + Math.random() * 18}s`);
+    petal.style.setProperty("--petal-delay", `${Math.random() * -30}s`);
+    petal.style.setProperty("--petal-drift", `${-90 + Math.random() * 180}px`);
+    petal.style.setProperty("--petal-rotation", `${Math.random() * 360}deg`);
+
+    ambientPetals.appendChild(petal);
+
+  }
+
+}
+
+/* MOUSE AND TOUCH GLOW */
+
+let pointerFrame = null;
+
+function movePointerGlow(event) {
+
+  if (window.matchMedia("(max-width: 600px)").matches) return;
+
+  const x = event.clientX;
+  const y = event.clientY;
+
+  if (pointerFrame) cancelAnimationFrame(pointerFrame);
+
+  pointerFrame = requestAnimationFrame(() => {
+    pointerGlow.style.left = `${x}px`;
+    pointerGlow.style.top = `${y}px`;
+    ambientBackground.classList.add("pointer-active");
+  });
+
+}
+
+document.addEventListener("pointermove", movePointerGlow);
+
+document.addEventListener("pointerleave", () => {
+  ambientBackground.classList.remove("pointer-active");
+});
+
 
 /* PASSWORD */
 
@@ -1685,6 +2345,267 @@ function updateCounter() {
 
 updateCounter();
 setInterval(updateCounter, 1000);
+
+
+/* 100 LITTLE REASONS */
+
+const reasons = [
+  "The way your smile makes an ordinary day feel special.",
+  "Your laugh, especially when you can't stop laughing.",
+  "How gentle your heart is.",
+  "The way you make little moments unforgettable.",
+  "Your beautiful way of seeing the world.",
+  "How you can make me smile without even trying.",
+  "The way you talk about things you love.",
+  "Your kindness, even in the smallest things.",
+  "How comfortable silence can feel with you.",
+  "The way you turn simple conversations into memories.",
+  "Your shy little moments.",
+  "The happiness in your voice when you're excited.",
+  "How you remember the little details.",
+  "The way you make me want to be better.",
+  "Your sense of humor.",
+  "How you can make me laugh at the most random things.",
+  "The warmth you bring into my life.",
+  "Your thoughtful heart.",
+  "The way you care about the people you love.",
+  "How you make ordinary days worth remembering.",
+  "Your beautiful smile.",
+  "The way your eyes light up when you're happy.",
+  "How you make even a short conversation mean something.",
+  "Your patience.",
+  "The way you encourage me.",
+  "How you remind me of the good things in life.",
+  "Your honesty.",
+  "The little expressions you make.",
+  "How being around you feels peaceful.",
+  "The way you make me feel understood.",
+  "Your soft heart.",
+  "How you find joy in simple things.",
+  "The way you laugh at my jokes, even the terrible ones.",
+  "Your voice.",
+  "How you make distance feel smaller.",
+  "The way you make me look forward to tomorrow.",
+  "Your beautiful personality.",
+  "How you can be both sweet and funny.",
+  "The way you make a place feel familiar.",
+  "Your little habits that are uniquely yours.",
+  "How you make me appreciate the present.",
+  "The way you listen.",
+  "Your courage to be yourself.",
+  "How you make a normal day feel like a good memory.",
+  "Your caring nature.",
+  "The way you make me feel lucky.",
+  "How you bring calm to my thoughts.",
+  "The little stories you tell me.",
+  "Your playful side.",
+  "The way you make time together feel precious.",
+  "How you make me smile at my phone.",
+  "Your gentle words.",
+  "The way you make me feel at home.",
+  "How you never have to pretend to be someone else.",
+  "Your beautiful heart.",
+  "The way you make me believe in good things.",
+  "How you turn small moments into big memories.",
+  "Your sweet reactions.",
+  "The way you make me laugh when I need it most.",
+  "How you make every little detail matter.",
+  "The way you care.",
+  "Your lovely imagination.",
+  "How you make me feel appreciated.",
+  "The way you can make me forget a stressful day.",
+  "Your kindness when nobody is watching.",
+  "The way you make me excited about our future.",
+  "Your little surprises.",
+  "How you make conversations last longer than planned.",
+  "The way you make me feel seen.",
+  "Your beautiful energy.",
+  "How you make even simple plans exciting.",
+  "The way you share your thoughts with me.",
+  "Your lovely smile when you're trying not to laugh.",
+  "How you make me want to collect more memories.",
+  "The way you make me feel grateful.",
+  "Your sweetness.",
+  "The way you make the world feel a little softer.",
+  "How you make me enjoy the smallest things.",
+  "Your trust.",
+  "The way you make me feel close to you.",
+  "How you bring happiness into the ordinary.",
+  "Your little jokes.",
+  "The way you make me want to keep learning about you.",
+  "How every memory with you has its own place.",
+  "Your beautiful way of expressing love.",
+  "The way you make me feel hopeful.",
+  "Your presence.",
+  "How you make me appreciate the little things.",
+  "The way you make me feel that I'm not alone.",
+  "Your warmth.",
+  "The way you make me look forward to seeing you.",
+  "How you make simple moments feel meaningful.",
+  "Your smile after a long day.",
+  "The way you inspire me to grow.",
+  "How you make our story feel like ours.",
+  "Every little thing that makes you who you are.",
+  "Because you're you, and that's already enough.",
+  "Because I get to know you a little more every day.",
+  "Because if I had to choose again, I'd still choose you."
+];
+
+const reasonsGrid = document.getElementById("reasons-grid");
+const reasonsCount = document.getElementById("reasons-count");
+const reasonsProgressFill = document.getElementById("reasons-progress-fill");
+
+let revealedReasons = 0;
+
+reasons.forEach((reason, index) => {
+
+  const card = document.createElement("button");
+
+  card.type = "button";
+  card.className = "reason-card";
+  card.setAttribute("aria-expanded", "false");
+  card.setAttribute("aria-label", `Reveal reason ${index + 1}`);
+
+  card.innerHTML = `
+    <span class="reason-inner">
+      <span class="reason-front">
+        <span class="reason-heart">♡</span>
+        <span>REASON ${String(index + 1).padStart(2, "0")}</span>
+      </span>
+      <span class="reason-back">
+        <span></span>
+      </span>
+    </span>
+  `;
+
+  card.querySelector(".reason-back span").textContent = reason;
+
+  card.addEventListener("click", () => {
+
+    const isRevealed = card.classList.toggle("revealed");
+
+    card.setAttribute("aria-expanded", String(isRevealed));
+
+    revealedReasons += isRevealed ? 1 : -1;
+
+    reasonsCount.textContent = `${revealedReasons} / 100`;
+
+    reasonsProgressFill.style.width =
+      `${revealedReasons}%`;
+
+  });
+
+  reasonsGrid.appendChild(card);
+
+});
+
+
+/* THE STAR MAP */
+
+const starMemories = [
+  {
+    title: "Before We Knew",
+    date: "A LONG TIME AGO",
+    description: "Some stories begin long before the people in them understand what they will mean to each other. Ours was one of them.",
+    x: 11,
+    y: 25
+  },
+  {
+    title: "A Familiar Beginning",
+    date: "NINE YEARS OF LITTLE MOMENTS",
+    description: "Years passed, life changed, and somehow our paths found their way back to each other.",
+    x: 26,
+    y: 39
+  },
+  {
+    title: "November 15",
+    date: "NOVEMBER 15, 2025",
+    description: "The day our story became something more. A date I'll always keep close to my heart.",
+    x: 43,
+    y: 20
+  },
+  {
+    title: "The Little Conversations",
+    date: "OUR EVERYDAY MOMENTS",
+    description: "The calls, the random stories, the laughter, and all those ordinary conversations that never felt ordinary.",
+    x: 59,
+    y: 37
+  },
+  {
+    title: "A Ramadan Evening",
+    date: "RAMADAN MEMORIES",
+    description: "An evening filled with food, laughter, little games, and a memory that still feels warm.",
+    x: 78,
+    y: 22
+  },
+  {
+    title: "Eid Moments",
+    date: "EID MEMORIES",
+    description: "The visits, the photos, the smiles, and the small moments that made the day feel special.",
+    x: 90,
+    y: 45
+  },
+  {
+    title: "The Little Things",
+    date: "ALL THE DAYS IN BETWEEN",
+    description: "The jokes, the familiar smiles, the things only we understand, and the memories still waiting to happen.",
+    x: 35,
+    y: 72
+  },
+  {
+    title: "Still Becoming",
+    date: "TODAY & EVERY DAY",
+    description: "This isn't the end of our story. There are still so many stars left to add to our sky.",
+    x: 68,
+    y: 78
+  }
+];
+
+const starMapCanvas = document.getElementById("star-map-canvas");
+const starMemoryDate = document.getElementById("star-memory-date");
+const starMemoryTitle = document.getElementById("star-memory-title");
+const starMemoryDescription = document.getElementById("star-memory-description");
+
+starMemories.forEach((memory, index) => {
+
+  const star = document.createElement("button");
+
+  star.type = "button";
+  star.className = "map-star";
+  star.style.setProperty("--star-left", `${memory.x}%`);
+  star.style.setProperty("--star-top", `${memory.y}%`);
+  star.setAttribute("aria-label", `Open memory: ${memory.title}`);
+
+  const label = document.createElement("span");
+  label.className = "map-star-label";
+  label.textContent = memory.title;
+
+  star.appendChild(label);
+
+  star.addEventListener("click", () => {
+
+    document.querySelectorAll(".map-star").forEach(item => {
+      item.classList.remove("selected");
+    });
+
+    star.classList.add("selected");
+
+    starMemoryDate.textContent = memory.date;
+    starMemoryTitle.textContent = memory.title;
+    starMemoryDescription.textContent = memory.description;
+
+  });
+
+  starMapCanvas.appendChild(star);
+
+  if (index === 2) {
+    star.classList.add("selected");
+    starMemoryDate.textContent = memory.date;
+    starMemoryTitle.textContent = memory.title;
+    starMemoryDescription.textContent = memory.description;
+  }
+
+});
 
 
 /* LETTER TYPEWRITER */
